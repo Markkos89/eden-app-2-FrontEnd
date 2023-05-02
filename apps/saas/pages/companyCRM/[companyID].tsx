@@ -1,8 +1,10 @@
 import { gql, useQuery } from "@apollo/client";
+// import { FIND_MEMBER_INFO } from "@eden/package-graphql";
 import {
   AppUserLayout,
   Avatar,
   CandidatesTableList,
+  ColumnsType,
   SEO,
 } from "@eden/package-ui";
 import { useRouter } from "next/router";
@@ -197,6 +199,26 @@ type CandidateType = {
   responseRate?: number;
 };
 
+const columns: ColumnsType[] = [
+  { label: "#", accessor: "_id", sortable: true, sortbyOrder: "desc" },
+  { label: "Name", accessor: "name", sortable: false, sortbyOrder: "desc" },
+  { label: "Match", accessor: "score", sortable: true, sortbyOrder: "desc" },
+  {
+    label: "USDC / Hour",
+    accessor: "usdcHour",
+    sortable: true,
+    sortbyOrder: "desc",
+  },
+  { label: "Role", accessor: "role", sortable: true, sortbyOrder: "desc" },
+  { label: "Level", accessor: "level", sortable: true, sortbyOrder: "desc" },
+  {
+    label: "Response Rate",
+    accessor: "responseRate",
+    sortable: true,
+    sortbyOrder: "desc",
+  },
+];
+
 const CompanyCRM: NextPageWithLayout = () => {
   // interface MessageObject {
   //   message: string;
@@ -245,7 +267,6 @@ const CompanyCRM: NextPageWithLayout = () => {
           };
         })
       );
-
       setQuestions(
         data.findCompany.questionsToAsk.map((question: QuestionsToAsk) => {
           return {
@@ -258,10 +279,14 @@ const CompanyCRM: NextPageWithLayout = () => {
     },
   });
 
-  // console.log(!Boolean(companyID), {
-  // findCompanyData,
-  // findCompanyIsLoading,
-  // findCompanyError,
+  // const { data } = useQuery(FIND_MEMBER_INFO, {
+  //   variables: {
+  //     fields: {
+  //       discordName: handle,
+  //     },+
+  //     skip: !Boolean(handle),
+  //     ssr: false,
+  //   },
   // });
 
   const handleRowClick = (user: CandidateType) => {
@@ -303,9 +328,10 @@ const CompanyCRM: NextPageWithLayout = () => {
           </button>
         </div>
         <CandidatesTableList
-          candidatesList={candidates}
+          data={candidates}
           fetchIsLoading={findCompanyIsLoading}
           setRowObjectData={handleRowClick}
+          columns={columns}
         />
 
         <button

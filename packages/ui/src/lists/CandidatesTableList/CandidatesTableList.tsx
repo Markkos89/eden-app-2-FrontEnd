@@ -5,55 +5,41 @@ import {
   GridLayout,
   Loading,
 } from "@eden/package-ui";
-import clsx from "clsx";
-import { ComponentPropsWithoutRef, FC, ReactNode } from "react";
+import { FC } from "react";
 
-import type { Candidate } from "./types";
-
-interface InputGroupProps extends ComponentPropsWithoutRef<"td"> {
-  extraCssClass?: string;
-  textColor?: string;
-  children: string | ReactNode;
-}
-
-const ColumnStyled: FC<InputGroupProps> = ({
-  extraCssClass,
-  children,
-  textColor = "text-gray-900",
-  ...otherProps
-}) => (
-  <td
-    className={clsx(
-      "text-md border  px-4 py-3 text-center",
-      textColor,
-      extraCssClass
-    )}
-    {...otherProps}
-  >
-    {children}
-  </td>
-);
+import { useSortableTable } from "../../../utils/useSortableTable";
+import { ColumnStyled } from "./components/ColumnStyled";
+import { TableBody } from "./components/TableBody";
+import { TableHead } from "./components/TableHead";
+import type { Candidate, ColumnsType } from "./types";
 
 type CandidatesTableListProps = {
-  candidatesList: Candidate[];
+  data: Candidate[];
   fetchIsLoading: boolean;
   // eslint-disable-next-line no-unused-vars
   setRowObjectData?: (user: Candidate) => void;
+  columns: ColumnsType[];
 };
 
-export const CandidatesTableList: React.FC<CandidatesTableListProps> = ({
-  candidatesList,
+export const CandidatesTableList: FC<CandidatesTableListProps> = ({
+  data,
   fetchIsLoading,
   setRowObjectData,
+  columns,
 }) => {
+  const [tableData, handleSorting] = useSortableTable(data, columns);
+
   const handleObjectDataSelection = (user: Candidate) => {
     setRowObjectData && setRowObjectData(user);
   };
 
+  // check columns ?
+  // if (columns.length !== candidatesList.length - 1) return null;
+
   return (
     <GridLayout>
       <GridItemTwelve>
-        <table className="text-md w-full border-collapse border-2 border-black">
+        <table className="text-md table w-full border-collapse border-2 border-black">
           <thead className="text-gray-500">
             <tr>
               <th className="border border-black py-4">#</th>
@@ -82,8 +68,8 @@ export const CandidatesTableList: React.FC<CandidatesTableListProps> = ({
                   <Loading />
                 </td>
               </tr>
-            ) : Boolean(candidatesList) ? (
-              candidatesList.map((user, idx) => (
+            ) : Boolean(data) ? (
+              data.map((user, idx) => (
                 <tr
                   key={`${user._id}`}
                   onClick={() => handleObjectDataSelection(user)}
@@ -148,6 +134,14 @@ export const CandidatesTableList: React.FC<CandidatesTableListProps> = ({
             )}
           </tbody>
         </table>
+        <br />
+        <br />
+        <>
+          <table className="table">
+            <TableHead {...{ columns, handleSorting }} />
+            <TableBody {...{ columns, tableData }} />
+          </table>
+        </>
       </GridItemTwelve>
     </GridLayout>
   );
