@@ -13,7 +13,7 @@ const HomePage: NextPageWithLayout = () => {
             <Link href={"/interview/644e052ca7177f51e7c27b77"}>Interview</Link>
           </li>
           <li>
-            <Link href={"/dashboard/644e052ca7177f51e7c27b77"}>
+            <Link href={"/company/644e052ca7177f51e7c27b77"}>
               Company Dashboard
             </Link>
           </li>

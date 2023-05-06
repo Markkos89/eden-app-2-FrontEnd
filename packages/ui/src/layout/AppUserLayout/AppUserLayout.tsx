@@ -13,7 +13,7 @@ export const AppUserLayout = ({
     <>
       <div className="bg-background flex h-screen min-w-0 flex-col lg:overflow-y-hidden">
         <AppHeader logoLink={logoLink} inApp />
-        <main className="flex flex-grow">{children}</main>
+        <main className="relative flex flex-grow">{children}</main>
       </div>
     </>
   );

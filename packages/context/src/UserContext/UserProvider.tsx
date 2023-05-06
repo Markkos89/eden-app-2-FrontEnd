@@ -2,7 +2,7 @@ import { gql, useQuery, useSubscription } from "@apollo/client";
 import { FIND_CURRENTUSER, FIND_CURRENTUSER_SUB } from "@eden/package-graphql";
 import { ServerTemplate } from "@eden/package-graphql/generated";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 // import { isAllServers, isEdenStaff } from "../../data";
 import { UserContext } from "./UserContext";
@@ -80,8 +80,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // if (dataServers) console.log("dataServers", dataServers?.findServers);
 
-  useEffect(() => {
-    if (dataMember) {
+  useMemo(() => {
+    if (dataMember && dataMember.findMember?.serverID !== memberServerIDs) {
       setMemberServerIDs(dataMember.findMember?.serverID || []);
       setSelectedServerID(dataMember.findMember?.serverID || []);
     }
