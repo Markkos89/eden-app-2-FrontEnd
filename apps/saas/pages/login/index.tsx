@@ -1,5 +1,6 @@
 import { LoginSection, SEO } from "@eden/package-ui";
 import type { GetServerSideProps, NextPage } from "next";
+import { getSession } from "next-auth/react";
 
 import wave from "../../public/wave.gif";
 
@@ -13,8 +14,6 @@ const LoginPage: NextPage = () => {
 };
 
 export default LoginPage;
-
-import { getSession } from "next-auth/react";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const session = await getSession(ctx);
