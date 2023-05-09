@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const FIND_MEMBER = gql`
-  query ($fields: findMemberInput) {
+  query findMember($fields: findMemberInput) {
     findMember(fields: $fields) {
       _id
       discordAvatar

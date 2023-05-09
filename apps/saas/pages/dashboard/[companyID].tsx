@@ -12,7 +12,12 @@ import React, { useState } from "react";
 import { NextPageWithLayout } from "../_app";
 
 const CompanyCRM: NextPageWithLayout = () => {
-  const { candidates, trainQuestions, setTrainQuestions } = useSaasAppContext();
+  const {
+    candidates,
+    findCompanyIsLoading,
+    trainQuestions,
+    setTrainQuestions,
+  } = useSaasAppContext();
 
   const router = useRouter();
   const { companyID } = router.query;
@@ -33,7 +38,7 @@ const CompanyCRM: NextPageWithLayout = () => {
         <div className="container m-4 border border-gray-500 p-4">
           <CandidatesTableList
             candidatesList={candidates}
-            fetchIsLoading={!candidates}
+            fetchIsLoading={findCompanyIsLoading}
           />
           <button
             className="mt-4 rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-600"

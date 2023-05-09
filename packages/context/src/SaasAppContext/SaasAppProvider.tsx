@@ -33,7 +33,7 @@ export const SaasAppProvider = ({ children }: SaasAppProviderProps) => {
   const router = useRouter();
   const { companyID } = router.query;
 
-  useQuery(FIND_COMPANY_FULL, {
+  const { loading: findCompanyIsLoading } = useQuery(FIND_COMPANY_FULL, {
     variables: {
       fields: {
         _id: companyID,
@@ -61,7 +61,7 @@ export const SaasAppProvider = ({ children }: SaasAppProviderProps) => {
     },
   });
 
-  useQuery<Members>(FIND_MEMBER, {
+  useQuery(FIND_MEMBER, {
     variables: {
       fields: {
         _id: selectedCandidateID,
@@ -80,6 +80,7 @@ export const SaasAppProvider = ({ children }: SaasAppProviderProps) => {
     trainQuestions,
     setTrainQuestions,
     candidates,
+    findCompanyIsLoading,
     selectedCandidateID,
     setSelectedCandidateID,
     selectedCandidateScore,

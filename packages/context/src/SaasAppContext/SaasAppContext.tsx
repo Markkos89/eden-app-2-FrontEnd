@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-empty-function */
-import { CandidateType, Maybe, Members } from "@eden/package-graphql/generated";
+import { CandidateType, Members } from "@eden/package-graphql/generated";
 import { createContext, Dispatch, SetStateAction, useContext } from "react";
 
 export type QuestionType = {
@@ -15,6 +15,7 @@ export interface SaasAppContextType {
   trainQuestions: QuestionType[];
   setTrainQuestions: Dispatch<SetStateAction<QuestionType[]>>;
   candidates: CandidateType[];
+  findCompanyIsLoading: boolean;
   selectedCandidateID: string;
   setSelectedCandidateID: Dispatch<SetStateAction<string>>;
   selectedCandidateScore: number | null;
@@ -30,6 +31,7 @@ export const SaasAppContext = createContext<SaasAppContextType>({
   trainQuestions: [],
   setTrainQuestions: () => {},
   candidates: [],
+  findCompanyIsLoading: false,
   selectedCandidateID: "",
   setSelectedCandidateID: () => {},
   selectedCandidateScore: null,

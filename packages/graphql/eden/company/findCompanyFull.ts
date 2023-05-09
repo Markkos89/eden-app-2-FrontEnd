@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 // import { CompanyCandidatesFragment } from "../fragments/companyCandidatesFragment";
 
 export const FIND_COMPANY_FULL = gql`
-  query ($fields: findCompanyInput!) {
+  query findCompanyFull($fields: findCompanyInput!) {
     findCompany(fields: $fields) {
       _id
       name
