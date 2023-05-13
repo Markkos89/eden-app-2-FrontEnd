@@ -6,6 +6,7 @@ import { UserProvider } from "@eden/package-context";
 import { apolloClient } from "@eden/package-graphql";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
+import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import type { ReactElement, ReactNode } from "react";
 import * as React from "react";
@@ -20,7 +21,7 @@ export type NextPageWithLayout<P = any, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
+type AppPropsWithLayout = AppProps<{ session: Session }> & {
   Component: NextPageWithLayout;
 };
 

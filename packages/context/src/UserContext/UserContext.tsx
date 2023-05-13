@@ -1,5 +1,5 @@
 import { Members, ServerTemplate } from "@eden/package-graphql/generated";
-import { createContext, Dispatch } from "react";
+import { createContext, Dispatch, useContext } from "react";
 
 export interface UserContextType {
   currentUser?: Members;
@@ -20,3 +20,7 @@ export const UserContext = createContext<UserContextType>({
   // eslint-disable-next-line no-empty-function
   setSelectedServerID: () => {},
 });
+
+UserContext.displayName = "UserContext";
+
+export const useUserContext = () => useContext(UserContext);
