@@ -33,24 +33,25 @@ HomePage.getLayout = (page) => <AppUserLayout>{page}</AppUserLayout>;
 
 export default HomePage;
 
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
+// commented because now is validated on the middleware.ts
+// import { GetServerSideProps } from "next";
+// import { getSession } from "next-auth/react";
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//   const session = await getSession(ctx);
 
-  const url = ctx.req.url?.replace("/", "");
+//   const url = ctx.req.url?.replace("/", "");
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/login?redirect=${url}`,
-        permanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: `/login?redirect=${url}`,
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {},
-  };
-};
+//   return {
+//     props: {},
+//   };
+// };

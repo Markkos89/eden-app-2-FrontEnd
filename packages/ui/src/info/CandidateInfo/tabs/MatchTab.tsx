@@ -37,8 +37,6 @@ export const MatchTab: FC<Props> = ({ member, summaryQuestions }) => {
     const dataBarChartPr: BarChartQuestions[] = [];
 
     summaryQuestions?.forEach((question: any) => {
-      console.log("question = ", question);
-
       if (question?.score) {
         dataBarChartPr.push({
           questionID: question?.questionID,

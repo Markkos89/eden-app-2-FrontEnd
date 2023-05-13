@@ -10,6 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     secret: process.env.NEXT_PUBLIC_SECRET,
   });
 
+  // console.log("fetch token api token", token);
   let edenToken = null;
   let error = null;
 
@@ -28,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      // console.log("FETCH TOKEN API DATA", data);
+      // console.log("FETCH TOKEN API DATA", data); // DEV: here is receiving this error: { error: 'Wrong recipient, payload audience != requiredAudience' }
       if (data.edenToken) {
         edenToken = data.edenToken;
       }

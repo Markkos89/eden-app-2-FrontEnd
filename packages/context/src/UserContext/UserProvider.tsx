@@ -1,6 +1,6 @@
 import { gql, useQuery, useSubscription } from "@apollo/client";
 import { FIND_CURRENTUSER, FIND_CURRENTUSER_SUB } from "@eden/package-graphql";
-import { ServerTemplate } from "@eden/package-graphql/generated";
+import { Members, ServerTemplate } from "@eden/package-graphql/generated";
 import { useSession } from "next-auth/react";
 import React, { useMemo, useState } from "react";
 
@@ -34,6 +34,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [memberServers, setMemberServers] = useState<ServerTemplate[]>([]);
   const [selectedServerID, setSelectedServerID] = useState<string[]>([]);
   const [memberServerIDs, setMemberServerIDs] = useState<string[]>([]);
+
+  const [currentUser, setCurrentUser] = useState<Members>();
 
   const { data: dataMember, refetch: refechProfile } = useQuery(
     FIND_CURRENTUSER,
@@ -84,6 +86,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     if (dataMember) {
       setMemberServerIDs(dataMember.findMember?.serverID || []);
       setSelectedServerID(dataMember.findMember?.serverID || []);
+      if (currentUser?._id !== dataMember.findMember?._id) {
+        setCurrentUser(dataMember.findMember);
+      }
     }
 
     if (dataMember && process.env.NODE_ENV === "development") {
@@ -91,10 +96,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       console.log(dataMember.findMember);
       console.log(`==== ----------- ====`);
     }
-  }, [dataMember]);
+  }, [currentUser?._id, dataMember]);
 
   const injectContext = {
-    currentUser: dataMember?.findMember || undefined,
+    currentUser,
     refechProfile: refechProfile,
     memberServers,
     memberServerIDs,
